@@ -3,11 +3,13 @@ name: Registrar Pushes
 on:
   push:
     branches:
-      - main 
+      - main
 
 jobs:
   registrar_push:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write 
     steps:
       - name: Checkout del repositorio
         uses: actions/checkout@v4
@@ -26,10 +28,10 @@ jobs:
           echo "Autor: $AUTHOR_NAME <$AUTHOR_EMAIL>" >> push_log.txt
           echo "---" >> push_log.txt
           
-          cat push_log.txt 
-      
+          cat push_log.txt
+
       - name: Subir archivo de log al repositorio
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore(logs): Actualizar registro de pushes"
-          files: push_log.txt
+          file_pattern: push_log.txt
